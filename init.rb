@@ -1,1 +1,1 @@
-require 'silent-postgres'
+require 'silent-oracle'

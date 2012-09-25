@@ -1,11 +1,8 @@
 if Rails.env.development? || Rails.env.test?
+  require "silent-oracle/railtie"
 
-  require "silent-postgres/railtie"
-  require "silent-postgres/schema_plus"
-
-  module SilentPostgres
-    SILENCED_METHODS = %w(tables table_exists? indexes column_definitions pk_and_sequence_for last_insert_id)
-
+  module SilentOracle
+    SILENCED_METHODS = %w(next_sequence_value tables has_primary_key_trigger? columns pk_and_sequence_for temporary_table?)
     def self.included(base)
       SILENCED_METHODS.each do |m|
         base.send :alias_method_chain, m, :silencer
@@ -30,4 +27,3 @@ if Rails.env.development? || Rails.env.test?
   end
 
 end
-
